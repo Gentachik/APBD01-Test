@@ -82,5 +82,21 @@ public class LibraryRepository : ILibraryRepository
         return editionsDto;
     }
 
-    
+    public async Task<int> AddBook(BookDto bookDto)
+    {
+        var query = "INSERT INTO books values ('@title')";
+        
+        await using SqlConnection connection = new SqlConnection(_configuration.GetConnectionString("Default"));
+        await using SqlCommand command = new SqlCommand();
+        command.Connection = connection;
+        command.CommandText = query;
+        command.Parameters.AddWithValue("@title", bookDto.BookTitle);
+        
+        await connection.OpenAsync();
+        var id = await command.ExecuteScalarAsync();
+
+        if (id is null) throw new Exception();
+	    
+        return Convert.ToInt32(id);
+    }
 }

@@ -7,4 +7,5 @@ public interface ILibraryRepository
     Task<bool> DoesPublishingHouseExist(int id);
     Task<bool> DoesBookExist(int id);
     Task<List<EditionDto>> GetBookEditions(int id);
+    Task<int> AddBook(BookDto bookDto);
 }
