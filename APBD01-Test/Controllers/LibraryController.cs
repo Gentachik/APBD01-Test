@@ -30,7 +30,8 @@ public class LibraryController : ControllerBase
     {
         if (!await _libraryRepository.DoesPublishingHouseExist(bookDto.publishingHouseId))
             return NotFound($"Publishing house with given ID - {bookDto.publishingHouseId} doesn't exist");
-        _libraryRepository.AddBook(bookDto);
+        
+        await _libraryRepository.AddBook(bookDto);
         
         return Created();
     }
